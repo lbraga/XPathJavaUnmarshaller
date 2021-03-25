@@ -1,0 +1,8 @@
+br/com/l3b/ClassDef.java
+ br.com.l3b.ClassDef
+br/com/l3b/Parser.java
+ br.com.l3b.Parser
+br/com/l3b/Main.java
+ br.com.l3b.Main
+br/com/l3b/Generator.java
+ br.com.l3b.Generator
