@@ -72,7 +72,7 @@ public class Main {
             System.out.println("Error parsing command-line arguments!");
             System.out.println("Please, follow the instructions below:");
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("Log messages to sequence diagrams converter", options);
+            formatter.printHelp("Generate Java classes from xml files", options);
             System.exit(1);
         }
 
