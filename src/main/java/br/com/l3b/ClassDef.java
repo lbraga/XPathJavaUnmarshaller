@@ -1,5 +1,6 @@
 package br.com.l3b;
 
+import com.google.common.base.CaseFormat;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.*;
@@ -16,17 +17,27 @@ public class ClassDef {
 
     private String elementPrefix;
 
-    public ClassDef(String name, ClassDef parent) {
+    private boolean camelCase;
+
+    public ClassDef(String name, ClassDef parent, boolean camelCase) {
         this.element = name;
         this.parent = parent;
+        this.camelCase = camelCase;
     }
 
     public String getElement() {
-        return element;
+        return this.element;
     }
 
     public String getElementFormatted() {
-        return element.substring(0, 1).toUpperCase() + element.substring(1);
+        if (this.camelCase) {
+            return toCamelCase(this.getElement());
+        }
+        return this.getElement();
+    }
+
+    public String getElementFormattedToTypeName() {
+        return getElementFormatted().substring(0, 1).toUpperCase() + getElementFormatted().substring(1);
     }
 
     public void setElement(String element) {
@@ -159,5 +170,10 @@ public class ClassDef {
     @Override
     public int hashCode() {
         return Objects.hash(element);
+    }
+
+    private String toCamelCase(String name) {
+        name = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, name);
+        return name.substring(0, 1).toLowerCase() + name.substring(1);
     }
 }

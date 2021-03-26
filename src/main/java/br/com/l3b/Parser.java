@@ -15,8 +15,11 @@ public class Parser {
 
     private String xmlFile;
 
-    public Parser(String xmlFile) {
-        this.xmlFile = xmlFile;
+    private boolean camelCase;
+
+    public Parser(String xmlFile, boolean camelCase) {
+                this.xmlFile = xmlFile;
+                this.camelCase = camelCase;
     }
 
     public ClassDef parse() throws XMLStreamException, FileNotFoundException {
@@ -30,7 +33,7 @@ public class Parser {
             if (xmlEvent.isStartElement()) {
                 String element = xmlEvent.asStartElement().getName().getLocalPart();
                 ClassDef current = current();
-                ClassDef classDef = new ClassDef(element, current);
+                ClassDef classDef = new ClassDef(element, current, this.camelCase);
                 if (current != null) {
                     append(current, classDef);
                 }

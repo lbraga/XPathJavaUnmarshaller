@@ -76,7 +76,7 @@ public class Main {
             System.exit(1);
         }
 
-        ClassDef classDef = new Parser(xmlFile).parse();
+        ClassDef classDef = new Parser(xmlFile, camelCase).parse();
         new Generator(templateFile, xmlFile, generatedDirectory, packageName, classPrefix, camelCase).generate(classDef);
     }
 

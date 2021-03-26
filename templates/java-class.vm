@@ -16,11 +16,11 @@ public class $className {
 
     #foreach( $field in $fields )
     #if ($field.isCollection)
-private List<$classPrefix$field.elementFormatted> ${field.element}List = new ArrayList<>();
+private List<$classPrefix$field.elementFormattedToTypeName> ${field.elementFormatted}List = new ArrayList<>();
     #elseif ($field.isObject)
-private $classPrefix$field.elementFormatted $field.element;
+private $classPrefix$field.elementFormattedToTypeName $field.elementFormatted;
     #else
-private String $field.element;
+private String $field.elementFormatted;
     #end
 
     #end
@@ -28,22 +28,22 @@ private String $field.element;
     public $className(String xml#foreach ($position in $classDef.pathPositions), int $position#if( $foreach.hasNext ),#end#end) {
         String size;
         #if( $classDef.pathPositions.size() > 0 )
-            String url = String.format(${classPrefix}${classDef.elementFormatted}.BASE_URL#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
+            String url = String.format(${classPrefix}${classDef.elementFormattedToTypeName}.BASE_URL#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
         #else
-            String url = ${classPrefix}${classDef.elementFormatted}.BASE_URL;
+            String url = ${classPrefix}${classDef.elementFormattedToTypeName}.BASE_URL;
         #end
         #foreach( $field in $fields )
             #if( $field.isCollection )
         size = XPathParser.getValueFromXmlString(xml, "count(" + url + "/$field.element)");
         if (!TaxitObjectUtils.isEmpty(size) && Integer.parseInt(size) > 0) {
             for (int i = 0; i < Integer.parseInt(size); i++) {
-                this.${field.element}List.add(new ${classPrefix}${field.elementFormatted}(xml#foreach ($position in $classDef.pathPositions), $position #if( $foreach.hasNext ),#end#end, i + 1));
+                this.${field.elementFormatted}List.add(new ${classPrefix}${field.elementFormattedToTypeName}(xml#foreach ($position in $classDef.pathPositions), $position #if( $foreach.hasNext ),#end#end, i + 1));
             }
         }
             #elseif ($field.isObject)
-        this.${field.element} = new ${classPrefix}${field.elementFormatted}(xml#foreach ($position in $classDef.pathPositions), $position #if( $foreach.hasNext ),#end#end);
+        this.${field.elementFormatted} = new ${classPrefix}${field.elementFormattedToTypeName}(xml#foreach ($position in $classDef.pathPositions), $position #if( $foreach.hasNext ),#end#end);
             #else
-        this.${field.element} = XPathParser.getValueFromXmlString(xml, url + "/${field.element}");
+        this.${field.elementFormatted} = XPathParser.getValueFromXmlString(xml, url + "/${field.element}");
             #end
             #end
     }
@@ -51,22 +51,22 @@ private String $field.element;
     public $className(String xml#foreach ($position in $classDef.pathPositions), int $position#if( $foreach.hasNext ),#end#end) {
         String size;
         #if( $classDef.pathPositions.size() > 0 )
-            String url = String.format(${classPrefix}${classDef.elementFormatted}.BASE_URL#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
+            String url = String.format(${classPrefix}${classDef.elementFormattedToTypeName}.BASE_URL#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
         #else
-            String url = ${classPrefix}${classDef.elementFormatted}.BASE_URL;
+            String url = ${classPrefix}${classDef.elementFormattedToTypeName}.BASE_URL;
         #end
         #foreach( $field in $fields )
             #if ($field.isCollection)
                 size = XPathParser.getValueFromXmlString(xml, "count(" + url + "/$field.element)");
                 if (!TaxitObjectUtils.isEmpty(size) && Integer.parseInt(size) > 0) {
                     for (int i = 0; i < Integer.parseInt(size); i++) {
-                        this.${field.element}List.add(new ${classPrefix}${field.elementFormatted}(xml#foreach ($position in $classDef.pathPositions), $position #if( $foreach.hasNext ), #end#end, i + 1));
+                        this.${field.elementFormatted}List.add(new ${classPrefix}${field.elementFormattedToTypeName}(xml#foreach ($position in $classDef.pathPositions), $position #if( $foreach.hasNext ), #end#end, i + 1));
                     }
                 }
             #elseif ($field.isObject)
-                this.${field.element} = new ${classPrefix}${field.elementFormatted}(xml#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
+                this.${field.elementFormatted} = new ${classPrefix}${field.elementFormattedToTypeName}(xml#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
             #else
-        this.${field.element} = XPathParser.getValueFromXmlString(xml, url + "/${field.element}");
+        this.${field.elementFormatted} = XPathParser.getValueFromXmlString(xml, url + "/${field.element}");
             #end
             #end
     }

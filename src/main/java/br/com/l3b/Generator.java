@@ -58,7 +58,7 @@ public class Generator {
 
         VelocityContext context = new VelocityContext();
         context.put("package", this.packageName);
-        context.put("className", getClassName(classDef.getElementFormatted()));
+        context.put("className", getClassName(classDef.getElementFormattedToTypeName()));
         context.put("classPrefix", this.classPrefix);
         context.put("classDef", classDef);
         context.put("fields", classDef.getClassDefList());
@@ -66,7 +66,7 @@ public class Generator {
         StringWriter writer = new StringWriter();
         t.merge(context, writer);
 
-        createFile(Paths.get(this.generatedDirectory, getClassName(classDef.getElementFormatted()) + ".java").toString(), writer.toString());
+        createFile(Paths.get(this.generatedDirectory, getClassName(classDef.getElementFormattedToTypeName()) + ".java").toString(), writer.toString());
     }
 
     private Object getClassName(String elementName) {
