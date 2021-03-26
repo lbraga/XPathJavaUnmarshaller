@@ -1,5 +1,17 @@
 # XPathJavaUnmarshaller
 
+Generate Java classes from xml files
+
+```
+Usage: 
+ -c,--classPrefix <arg>   java class name prefix
+ -g,--generated <arg>     generated files directory
+ -l,--camel               convert element name to camel case
+ -p,--package <arg>       java package
+ -t,--template <arg>      java class velocity template
+ -x,--xml <arg>           xml archive
+```
+
 Running unmarshaller
 
 ```
