@@ -43,10 +43,12 @@ private String $field.elementFormatted;
 
     #if ($classDef.isCollection)
     public $className(String xml#foreach ($position in $classDef.pathPositions), int $position#if( $foreach.hasNext ),#end#end) {
+        #if( $classDef.hasAnyFieldAsCollection() )
         String size;
+        #end
         #if( $classDef.pathPositions.size() > 0 )
             String url = String.format(${classPrefix}${classDef.elementFormattedToTypeName}.BASE_URL#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
-        #else
+        #elseif( !$classDef.hasOnlyFieldsAsObject() )
             String url = ${classPrefix}${classDef.elementFormattedToTypeName}.BASE_URL;
         #end
         #foreach( $field in $fields )
@@ -66,10 +68,12 @@ private String $field.elementFormatted;
     }
     #else
     public $className(String xml#foreach ($position in $classDef.pathPositions), int $position#if( $foreach.hasNext ),#end#end) {
+        #if( $classDef.hasAnyFieldAsCollection() )
         String size;
+        #end
         #if( $classDef.pathPositions.size() > 0 )
             String url = String.format(${classPrefix}${classDef.elementFormattedToTypeName}.BASE_URL#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
-        #else
+        #elseif( !$classDef.hasOnlyFieldsAsObject() )
             String url = ${classPrefix}${classDef.elementFormattedToTypeName}.BASE_URL;
         #end
         #foreach( $field in $fields )
@@ -83,7 +87,7 @@ private String $field.elementFormatted;
             #elseif ($field.isObject)
                 this.${field.elementFormatted} = ${classPrefix}${field.elementFormattedToTypeName}.buildLayout(xml#foreach ($position in $classDef.pathPositions), $position#if( $foreach.hasNext ),#end#end);
             #else
-        this.${field.elementFormatted} = XPathParser.getValueFromXmlString(xml, url + "/${field.element}");
+                this.${field.elementFormatted} = XPathParser.getValueFromXmlString(xml, url + "/${field.element}");
             #end
             #end
     }

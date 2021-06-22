@@ -159,6 +159,24 @@ public class ClassDef {
         this.setClassDefList(newClassDefList);
     }
 
+    public boolean hasAnyFieldAsCollection() {
+        for (ClassDef classDef : this.getClassDefList()) {
+            if (classDef.isCollection) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasOnlyFieldsAsObject() {
+        for (ClassDef classDef : this.getClassDefList()) {
+            if (!(classDef.getIsObject() && !classDef.getIsCollection())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
