@@ -3,6 +3,8 @@ package br.com.l3b;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
+import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,6 +39,9 @@ public class Parser {
                 if (current != null) {
                     append(current, classDef);
                 }
+
+                scanAttributes(xmlEvent, classDef);
+
                 push(classDef);
             } else if (xmlEvent.isEndElement()) {
                 last = pop();
@@ -49,6 +54,18 @@ public class Parser {
         }
 
         return last;
+    }
+
+    private void scanAttributes(XMLEvent xmlEvent, ClassDef parent) {
+        StartElement startElement = (StartElement) xmlEvent;
+        Iterator<Attribute> it = startElement.getAttributes();
+        while (it.hasNext()) {
+            Attribute attr = it.next();
+            ClassDef classDef = new ClassDef(attr.getName().getLocalPart(), parent, this.camelCase);
+            if (parent != null) {
+                append(parent, classDef);
+            }
+        }
     }
 
     private void push(ClassDef classDef) {
